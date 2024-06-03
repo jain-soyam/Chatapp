@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { useSignupFormStyles } from "./SignupForm.Styles";
+import { useSignupFormStyles } from "../signupForm/SignupForm.Styles";
 import {
   Box,
   Grid,
@@ -18,14 +17,19 @@ import { useState } from "react";
 import { ISignupForm } from "../../dto/SignupForm";
 import {
   getAuth,
-  createUserWithEmailAndPassword,
-  UserCredential,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "firebase/auth";
 import { app } from "../../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
+import GoogleLogo from "../../assets/google-logo.png";
 
-export const SignupForm = () => {
+export const LoginForm = () => {
   const auth = getAuth(app);
+  auth.useDeviceLanguage();
+  const provider = new GoogleAuthProvider();
+  provider.addScope("https://www.googleapis.com/auth/contacts.readonly");
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const signupFormStyles = useSignupFormStyles();
   const {
@@ -50,16 +54,29 @@ export const SignupForm = () => {
     event.preventDefault();
   };
 
-  const handleUserSignup: SubmitHandler<ISignupForm> = async (
+  const handleUserLogin: SubmitHandler<ISignupForm> = async (
     data: ISignupForm
   ) => {
     const { email, password } = data;
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential: UserCredential) => {
-        const user = userCredential.user;
-        console.log("signed up user data", user);
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user: any = userCredential.user;
+        localStorage.setItem("accessToken", user.accessToken);
         reset();
-        navigate("/login");
+        navigate("/chat");
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+
+  const handleLoginWithGoogle = async () => {
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential: any = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        localStorage.setItem("accessToken", token);
+        navigate("/chat");
       })
       .catch((error) => {
         return error;
@@ -70,7 +87,7 @@ export const SignupForm = () => {
     <Stack sx={signupFormStyles.getMainContStyles}>
       <form
         style={signupFormStyles.getFormStyles}
-        onSubmit={handleSubmit(handleUserSignup)}
+        onSubmit={handleSubmit(handleUserLogin)}
       >
         <Grid container rowSpacing={2}>
           <Grid item xs={12}>
@@ -85,28 +102,7 @@ export const SignupForm = () => {
                   <TextField
                     {...field}
                     placeholder="Enter your email*"
-                    sx={{
-                      "& .MuiInputBase-root": {
-                        background: "whitesmoke",
-                        fontSize: "16px",
-                        fontWeight: 400,
-                        lineHeight: "22.4px",
-                        textAlign: "left",
-                        borderRadius: "0.625rem",
-                        "& fieldset": {
-                          border: "none",
-                        },
-                        "&:hover fieldset": {
-                          border: "none",
-                        },
-                        "&.MuiInputBase-root.Mui-focused fieldset": {
-                          border: "1px solid #000",
-                        },
-                      },
-                      "& .MuiFormLabel-root": {
-                        fontSize: "1rem",
-                      },
-                    }}
+                    sx={signupFormStyles.textFieldStyles}
                     type="email"
                     variant="outlined"
                   />
@@ -133,7 +129,7 @@ export const SignupForm = () => {
                 control={control}
                 render={({ field }) => (
                   <OutlinedInput
-                    placeholder="Create password*"
+                    placeholder="Enter your password*"
                     type={isPasswordVisible ? "text" : "password"}
                     {...field}
                     endAdornment={
@@ -173,18 +169,31 @@ export const SignupForm = () => {
                 type="submit"
                 sx={signupFormStyles.getCommonButtonCustomStyles}
               >
-                Signup
+                Login
               </Button>
             </Box>
           </Grid>
         </Grid>
       </form>
+      <Box
+        sx={signupFormStyles.googleButtonContStyles}
+        onClick={handleLoginWithGoogle}
+      >
+        <img
+          src={GoogleLogo}
+          alt="google_logo"
+          style={signupFormStyles.googleLogoStyles}
+        />
+        <Typography sx={signupFormStyles.googleButtonTextStyles}>
+          Signin with Google
+        </Typography>
+      </Box>
       <Box sx={{ display: "flex" }}>
         <Typography sx={signupFormStyles.getActionTextOneStyles}>
-          Already have an account?
+          Don't have an account?
         </Typography>
-        <Link to="/login" style={signupFormStyles.getLinkStyles}>
-          &nbsp;Login
+        <Link to="/" style={signupFormStyles.getLinkStyles}>
+          &nbsp;Signup
         </Link>
       </Box>
     </Stack>

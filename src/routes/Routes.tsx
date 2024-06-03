@@ -1,7 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Layout } from "../layout/Layout";
 import SignupForm from "../features/signupForm";
-import { Box } from "@mui/material";
+import LoginForm from "../features/loginForm";
+import FormContainer from "../features/formContainer";
 
 const Routes = () => {
   const appRouter = createBrowserRouter([
@@ -12,22 +13,22 @@ const Routes = () => {
         {
           path: "/",
           element: (
-            <Box
-              sx={{
-                width: "100%",
-                height: "100vh",
-                position: "absolute",
-                top: "0vh",
-                left: "0vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                overlay: "auto",
-              }}
-            >
+            <FormContainer>
               <SignupForm />
-            </Box>
+            </FormContainer>
           ),
+        },
+        {
+          path: "/login",
+          element: (
+            <FormContainer>
+              <LoginForm />
+            </FormContainer>
+          ),
+        },
+        {
+          path: "/chat",
+          element: <>This is chat page</>,
         },
       ],
     },
