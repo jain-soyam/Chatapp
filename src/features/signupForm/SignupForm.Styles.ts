@@ -78,15 +78,16 @@ export const useSignupFormStyles = () => ({
 
   getActionTextOneStyles: {
     fontWeight: 400,
-    fontSize: "0.875rem",
+    fontSize: "1rem",
     lineHeight: "1.225rem",
-    textDecoration: "underline",
   },
 
   getLinkStyles: {
-    fontWeight: 400,
-    fontSize: "0.875rem",
+    fontWeight: 500,
+    fontSize: "1rem",
     lineHeight: "1.225rem",
+    color: "blue",
+    textDecoration: "none",
   },
 
   getErrorTextStyles: (isError?: FieldError) => {
@@ -100,5 +101,45 @@ export const useSignupFormStyles = () => ({
     display: "flex",
     justifyContent: "center",
     width: "100%",
+  },
+
+  googleButtonContStyles: {
+    width: "100%",
+    background: "whitesmoke",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0.5rem 0",
+    columnGap: "0.5rem",
+    cursor: "pointer",
+    border: "none",
+    borderRadius: "0.25rem",
+  },
+
+  googleLogoStyles: { width: "1.5rem", height: "1.5rem" },
+
+  googleButtonTextStyles: { fontSize: "0.875rem", fontWeight: 500 },
+
+  textFieldStyles: {
+    "& .MuiInputBase-root": {
+      background: "whitesmoke",
+      fontSize: "16px",
+      fontWeight: 400,
+      lineHeight: "22.4px",
+      textAlign: "left",
+      borderRadius: "0.625rem",
+      "& fieldset": {
+        border: "none",
+      },
+      "&:hover fieldset": {
+        border: "none",
+      },
+      "&.MuiInputBase-root.Mui-focused fieldset": {
+        border: "1px solid #000",
+      },
+    },
+    "& .MuiFormLabel-root": {
+      fontSize: "1rem",
+    },
   },
 });

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -9,4 +11,4 @@ const firebaseConfig = {
   appId: "1:589231393670:web:9308b40b639de4245d7a07",
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
