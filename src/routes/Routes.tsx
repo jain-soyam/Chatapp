@@ -4,6 +4,7 @@ import SignupForm from "../features/signupForm";
 import LoginForm from "../features/loginForm";
 import FormContainer from "../features/formContainer";
 import ChatRoom from "../features/chat/chatRoom";
+import UpdateProfileForm from "../features/updateProfile/UpdateProfile";
 
 const Routes = () => {
   const appRouter = createBrowserRouter([
@@ -30,6 +31,14 @@ const Routes = () => {
         {
           path: "/chat",
           element: <ChatRoom />,
+        },
+        {
+          path: "/Profile",
+          element: (
+            <FormContainer>
+              <UpdateProfileForm />
+            </FormContainer>
+          ),
         },
       ],
     },
