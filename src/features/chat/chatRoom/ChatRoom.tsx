@@ -20,11 +20,11 @@ import {
 } from "@mui/material";
 import { firestore } from "../../../firebaseConfig";
 import { getAuth } from "firebase/auth";
-import UpdateProfileForm from "../../updateProfile/UpdateProfile";
 import { Send } from "@mui/icons-material";
 import MessageContainer from "../messageContainer";
 import SenderProfileImage from "../../../assets/sender-profile-image.jpg";
 import { useChatRoomStyles } from "./ChatRoom.Styles";
+import { useNavigate } from "react-router-dom";
 
 interface MessageType {
   id: string;
@@ -37,10 +37,9 @@ export const ChatRoom = () => {
   const chatRoomStyles = useChatRoomStyles();
   const auth = getAuth();
   const user = auth.currentUser;
-  const [showUpdateProfile, setShowUpdateProfile] = useState<boolean>(false);
   const [messages, setMessages] = useState<MessageType[] | any>([]);
   const [newMessage, setNewMessage] = useState<string>("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     const queryMessage = query(messageRef, orderBy("createdAt", "asc"));
     const unsubscribe = onSnapshot(queryMessage, (snapshot) => {
@@ -71,7 +70,7 @@ export const ChatRoom = () => {
   };
 
   const toggleUpdateProfile = () => {
-    setShowUpdateProfile(!showUpdateProfile);
+    navigate("/profile");
   };
 
   return (
@@ -90,7 +89,6 @@ export const ChatRoom = () => {
       ) : (
         <Typography variant="body1">Loading user data...</Typography>
       )}
-      {showUpdateProfile && <UpdateProfileForm />}
       <Stack sx={chatRoomStyles.stackThreeStyles}>
         <Paper className="messages" sx={chatRoomStyles.paperOneStyles}>
           {messages.map((message: any) => (

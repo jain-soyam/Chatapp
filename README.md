@@ -1,30 +1,38 @@
-# React + TypeScript + Vite
+Introduction
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React application integrated with Firebase to provide functionalities like (replace with your functionalities, e.g., authentication, database access, etc.). This README provides a comprehensive overview of the project setup, installation instructions, and usage.
 
-Currently, two official plugins are available:
+Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Frontend: React-TypeScript, Material UI
+Backend: Firebase (Authentication, Database, etc.)
 
-## Expanding the ESLint configuration
+Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Node.js and npm installed on your system.
+A Firebase project created and configured with the desired services (Authentication, Database, etc.).
 
-- Configure the top-level `parserOptions` property like this:
+Installation
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+1. Clone this repository:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+git clone https://github.com/jain-soyam/Chatapp.git
+
+2. Navigate to the project directory:
+
+3. Install dependencies:
+
+npm install (This will bring the node modules in the project's root directory)
+
+Running the Application
+
+1. Start the development server:
+
+npm run dev (This command will start the project on http://localhost:5173)
+
+Features
+
+1. This project allows users to create an account (signup) by using any email and password. After successful signup, users are redirected to login page.
+2. After signup, users need to login to their account by using the same email and password they used while creating their account (signup)
+3. On successful login, users will be redirected to Chat window where they will be able to chat to another user in realtime. Realtime chat has been made possible by using Firebase's Firestore Database features.
+4. This project allows user to update their personal information like "Name", "password", etc. Updating "Email" and "Profile Picture"is in progress and will be integrated soon.
