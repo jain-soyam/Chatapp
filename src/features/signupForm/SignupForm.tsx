@@ -20,6 +20,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   UserCredential,
+  updateProfile,
 } from "firebase/auth";
 import { app } from "../../firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
@@ -35,6 +36,7 @@ export const SignupForm = () => {
     reset,
   } = useForm<ISignupForm>({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
@@ -53,13 +55,18 @@ export const SignupForm = () => {
   const handleUserSignup: SubmitHandler<ISignupForm> = async (
     data: ISignupForm
   ) => {
-    const { email, password } = data;
+    const { name, email, password } = data;
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential: UserCredential) => {
         const user = userCredential.user;
-        console.log("signed up user data", user);
-        reset();
-        navigate("/login");
+        updateProfile(user, { displayName: name })
+          .then(() => {
+            reset();
+            navigate("/login");
+          })
+          .catch((error) => {
+            console.error("Error updating profile:", error);
+          });
       })
       .catch((error) => {
         return error;
@@ -73,6 +80,56 @@ export const SignupForm = () => {
         onSubmit={handleSubmit(handleUserSignup)}
       >
         <Grid container rowSpacing={2}>
+          <Grid item xs={12}>
+            <Stack sx={signupFormStyles.stackOneStyles}>
+              <Typography sx={signupFormStyles.inputLabelStyles}>
+                Name
+              </Typography>
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    placeholder="Enter your name*"
+                    sx={{
+                      "& .MuiInputBase-root": {
+                        background: "whitesmoke",
+                        fontSize: "16px",
+                        fontWeight: 400,
+                        lineHeight: "22.4px",
+                        textAlign: "left",
+                        borderRadius: "0.625rem",
+                        "& fieldset": {
+                          border: "none",
+                        },
+                        "&:hover fieldset": {
+                          border: "none",
+                        },
+                        "&.MuiInputBase-root.Mui-focused fieldset": {
+                          border: "1px solid #000",
+                        },
+                      },
+                      "& .MuiFormLabel-root": {
+                        fontSize: "1rem",
+                      },
+                    }}
+                    type="text"
+                    variant="outlined"
+                  />
+                )}
+                rules={{
+                  required: "Name is required",
+                }}
+              />
+              <Typography
+                variant="caption"
+                sx={signupFormStyles.getErrorTextStyles(errors?.name)}
+              >
+                {errors?.name ? errors.name.message : ""}
+              </Typography>
+            </Stack>
+          </Grid>
           <Grid item xs={12}>
             <Stack sx={signupFormStyles.stackOneStyles}>
               <Typography sx={signupFormStyles.inputLabelStyles}>

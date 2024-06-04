@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { initializeApp } from "firebase/app";
-
+import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyBNsAKckC1LQI2yqQlya6XLwL2ODUdJWrw",
   authDomain: "hibff-ca5e0.firebaseapp.com",
@@ -12,3 +12,4 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+export const firestore = getFirestore(app);
