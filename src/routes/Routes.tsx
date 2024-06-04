@@ -3,6 +3,7 @@ import { Layout } from "../layout/Layout";
 import SignupForm from "../features/signupForm";
 import LoginForm from "../features/loginForm";
 import FormContainer from "../features/formContainer";
+import ChatRoom from "../features/chat/ChatRoom";
 
 const Routes = () => {
   const appRouter = createBrowserRouter([
@@ -28,7 +29,7 @@ const Routes = () => {
         },
         {
           path: "/chat",
-          element: <>This is chat page</>,
+          element: <ChatRoom />,
         },
       ],
     },
