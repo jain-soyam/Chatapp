@@ -3,7 +3,7 @@ import { Layout } from "../layout/Layout";
 import SignupForm from "../features/signupForm";
 import LoginForm from "../features/loginForm";
 import FormContainer from "../features/formContainer";
-import ChatRoom from "../features/chat/ChatRoom";
+import ChatRoom from "../features/chat/chatRoom";
 
 const Routes = () => {
   const appRouter = createBrowserRouter([
