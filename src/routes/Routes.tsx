@@ -33,7 +33,7 @@ const Routes = () => {
           element: <ChatRoom />,
         },
         {
-          path: "/Profile",
+          path: "/profile",
           element: (
             <FormContainer>
               <UpdateProfileForm />
